@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
+	"github.com/segmentio/kafka-go"
 	"log"
 	"net/url"
+	"strconv"
+	"strings"
 )
 
 var conn *websocket.Conn
@@ -106,22 +109,35 @@ func SubscribeAndListen(topics []string) error {
 
 	for {
 		_, payload, err := conn.ReadMessage()
-
 		if err != nil {
-
-			fmt.Println(err)
+			log.Println(err)
 			return err
 		}
 
 		trade := Ticker{}
 
 		err = json.Unmarshal(payload, &trade)
-
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			return err
 		}
 
 		log.Println(trade.Symbol, trade.Price, trade.Quantity)
+		go func() { // <=== here
+			convertAndPublishToKafka(trade)
+		}()
 	}
+}
+
+// add this function
+func convertAndPublishToKafka(t Ticker) {
+	bytes, err := json.Marshal(t)
+	if err != nil {
+		log.Println("Error marshalling Ticker data", err.Error())
+	}
+
+	Publish(kafka.Message{
+		Key:   []byte(t.Symbol + "-" + strconv.Itoa(int(t.Time))),
+		Value: bytes,
+	}, "trades-"+strings.ToLower(t.Symbol))
 }

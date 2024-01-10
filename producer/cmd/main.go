@@ -15,6 +15,8 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	trades.LoadHostAndPort(os.Getenv("KAFKA_HOST"), os.Getenv("KAFKA_PORT"))
+
 	t := os.Getenv("TICKERS")
 
 	topics := strings.Split(t, ",")
