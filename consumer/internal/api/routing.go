@@ -11,7 +11,6 @@ func AddRoutes(app *fiber.App) {
 			c.Locals("allowed", true)
 			return c.Next()
 		}
-
 		return fiber.ErrUpgradeRequired
 	})
 
