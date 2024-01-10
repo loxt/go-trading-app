@@ -1,4 +1,4 @@
-module github.com/loxt/go-trading-app-consumer
+module github.com/loxt/go-trading-app/consumer
 
 go 1.21
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
-	"github.com/loxt/go-trading-app-consumer/internal/core"
+	"github.com/loxt/go-trading-app/consumer/internal/core"
 	"github.com/segmentio/kafka-go"
 	"log"
 	"strings"

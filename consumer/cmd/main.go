@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/loxt/go-trading-app-consumer/internal/api"
-	"github.com/loxt/go-trading-app-consumer/internal/core"
+	"github.com/loxt/go-trading-app/consumer/internal/api"
+	"github.com/loxt/go-trading-app/consumer/internal/core"
 )
 
 func main() {
